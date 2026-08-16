@@ -5,7 +5,7 @@ def processPKT(pkt):
         src=pkt[ARP].psrc
         dst=pkt[ARP].pdst
         proto="ARP"
-        print(f"{src} → {dst} | {protocol}")
+        print(f"{src} → {dst} | {proto}")
         return
 
     if IP in pkt:
