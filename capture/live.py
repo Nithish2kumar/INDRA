@@ -42,7 +42,7 @@ def startCapture(inf):
     print("[*] Press Ctrl+C to stop")
     print()
     try:
-        sniff(iface=inf,prn=process_packet,store=False)
+        sniff(iface=inf,prn=processPKT,store=False)
 
     except PermissionError:
         print("[!] Permission denied.")
