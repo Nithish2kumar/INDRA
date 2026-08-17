@@ -7,13 +7,11 @@ def main():
     subparser=parser.add_subparsers(dest="command")
     sniff_parser=subparser.add_parser("sniff",help="Capture live network traffic")
     sniff_parser.add_argument("-i","--interface",required=True,help="Network interface to capture from")
-    arg=parser.parse_args()
-
+    
     pcap_parser=subparser.add_parser("capture",help="Capture traffic and save it as PCAP")
-
     pcap_parser.add_argument("-i","--interface",required=True,help="Network interface to capture from")
-
     pcap_parser.add_argument("-o","--output",required=True,help="Output PCAP file")
+    arg=parser.parse_args()
 
     if arg.command=="sniff":
         startCapture(arg.interface)
