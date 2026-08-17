@@ -1,5 +1,5 @@
 from scapy.all import sniff, wrpcap, rdpcap
-from live import processPKT
+from capture.live import processPKT
 
 def capturePcap(inf, of):
 
