@@ -1,5 +1,5 @@
-from scapy.all import sniff, wrpcap
-
+from scapy.all import sniff, wrpcap, rdpcap
+from live import processPKT
 
 def capturePcap(inf, of):
 
@@ -32,3 +32,9 @@ def capturePcap(inf, of):
         print(f"[+] PCAP: {of}")
     else:
         print("[!] No packets captured.")
+
+
+def readPCAP(pcapfile):
+    packets=rdpcap(pcapfile)
+    for pkt in packets:
+        processPKT(pkt)
