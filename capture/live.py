@@ -1,11 +1,24 @@
-from scapy.all import sniff, IP,IPv6,TCP,UDP,ARP
+from scapy.all import sniff, IP,IPv6,TCP,UDP,ARP,Ether
+from datetime import datetime
 
 def processPKT(pkt):
+    timestamp = datetime.fromtimestamp(
+        float(pkt.time)
+    ).strftime("%H:%M:%S")
+
+    src_mac = "-"
+    dst_mac = "-"
+    
     if ARP in pkt:
         src=pkt[ARP].psrc
         dst=pkt[ARP].pdst
         proto="ARP"
-        print(f"{src} → {dst} | {proto}")
+        print(
+            f"[{timestamp}] {src} → {dst} | "
+            f"{proto} | "
+            f"MAC: {src_mac} → {dst_mac} | "
+            f"Size: {len(pkt)}"
+        )
         return
 
     if IP in pkt:
@@ -17,20 +30,37 @@ def processPKT(pkt):
     else:
         return
 
+    sport = "-"
+    dport = "-"
+    proto = "Unknown"
+    flags = "-"
+
     if TCP in pkt:
         sport=pkt[TCP].sport
         dport=pkt[TCP].dport
         proto="TCP"
+        flags=pkt[TCP].flags
     elif UDP in pkt:
         sport=pkt[UDP].sport
         dport=pkt[UDP].dport
-    else:
-        proto=pkt.lastlayer().name
-        sport="-"
-        dport="-"
+        proto="UDP"
 
-    print(f"{src}:{sport} → {dst}:{dport} | "
-        f"{proto} | Size: {len(pkt)}")
+    if Ether in pkt:
+        src_mac=pkt[Ether].src
+        dst_mac=pkt[Ether].dst
+        proto="Ether"
+
+    
+
+    print(
+        f"[{timestamp}] "
+        f"{src}:{sport} → {dst}:{dport} | "
+        f"{proto} | "
+        f"MAC: {src_mac} → {dst_mac} | "
+        f"Size: {len(pkt)} | "
+        f"Flags: {flags}"
+    )
+
     
 def startCapture(inf):
     print("INDRA")
