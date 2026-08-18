@@ -15,8 +15,8 @@ def extractFlow(pcap):
             proto="TCP"
         elif UDP in p:
             proto="UDP"
-            sport=p[TCP].sport
-            dport=p[TCP].dport
+            sport=p[UDP].sport
+            dport=p[UDP].dport
         else:
             continue
 

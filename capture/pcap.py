@@ -1,5 +1,5 @@
 from scapy.all import sniff, wrpcap, rdpcap
-from capture.live import processPKT
+from analysis.flow import extractFlow
 
 def capturePcap(inf, of):
 
@@ -35,6 +35,6 @@ def capturePcap(inf, of):
 
 
 def readPCAP(pcapfile):
-    packets=rdpcap(pcapfile)
-    for pkt in packets:
-        processPKT(pkt)
+    flows=extractFlow(pcapfile)
+    for flow in flows.values():
+        print(flow)
