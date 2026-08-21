@@ -50,6 +50,8 @@ def processPKT(pkt):
         dst_mac=pkt[Ether].dst
         proto="Ether"
 
+    from asset.asset import discovery
+    discovery(proto)
     
 
     print(
